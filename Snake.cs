@@ -24,7 +24,7 @@ class Program
 
         string movement = "RIGHT";
 
-        List<int> telje = new List<int>();
+        List<int> teljePositie = new List<int>();
 
         int score = 0;
 
@@ -35,11 +35,6 @@ class Program
         hoofd.yPos = screenheight / 2;
 
         hoofd.schermKleur = ConsoleColor.Red;
-
-
-
-        List<int> teljePositie = new List<int>();
-
 
 
         teljePositie.Add(hoofd.xPos);
@@ -130,11 +125,11 @@ class Program
 
             Console.Write("H");
 
-            for (int i = 0; i < telje.Count(); i+=2)
+            for (int i = 0; i < teljePositie.Count(); i+=2)
 
             {
 
-                Console.SetCursorPosition(telje[i], telje[i + 1]);
+                Console.SetCursorPosition(teljePositie[i], teljePositie[i + 1]);
 
                 Console.Write("■");
 
@@ -229,9 +224,11 @@ class Program
 
             teljePositie.Insert(1, hoofd.yPos);
 
-            teljePositie.RemoveAt(teljePositie.Count - 1);
-
-            teljePositie.RemoveAt(teljePositie.Count - 1);
+            if (teljePositie.Count > (score + 1) * 2)
+            {
+                teljePositie.RemoveAt(teljePositie.Count - 1);
+                teljePositie.RemoveAt(teljePositie.Count - 1);
+            }
 
             //Kollision mit Wände oder mit sich selbst
 
@@ -257,11 +254,11 @@ class Program
 
             }
 
-            for (int i = 0; i < telje.Count(); i += 2)
+            for (int i = 2; i < teljePositie.Count(); i += 2)
 
             {
 
-                if (hoofd.xPos == telje[i] && hoofd.yPos == telje[i + 1])
+                if (hoofd.xPos == teljePositie[i] && hoofd.yPos == teljePositie[i + 1])
 
                 {
 
