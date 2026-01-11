@@ -215,9 +215,9 @@ class Program
 
                 score++;
 
-                obstacleXpos = randomnummer.Next(1, screenwidth);
+                obstacleXpos = randomnummer.Next(1, screenwidth - 1);
 
-                obstacleYpos = randomnummer.Next(1, screenheight);
+                obstacleYpos = randomnummer.Next(1, screenheight - 1);
 
             }
 
