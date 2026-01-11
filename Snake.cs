@@ -160,38 +160,39 @@ class Program
 
 
 
-            ConsoleKeyInfo info = Console.ReadKey();
-
             //Game Logic
-
-            switch (info.Key)
-
+            if (Console.KeyAvailable)
             {
+                ConsoleKeyInfo info = Console.ReadKey();
+                switch (info.Key)
 
-                case ConsoleKey.UpArrow:
+                {
 
-                    movement = "UP";
+                    case ConsoleKey.UpArrow:
 
-                    break;
+                        movement = "UP";
 
-                case ConsoleKey.DownArrow:
+                        break;
 
-                    movement = "DOWN";
+                    case ConsoleKey.DownArrow:
 
-                    break;
+                        movement = "DOWN";
 
-                case ConsoleKey.LeftArrow:
+                        break;
 
-                    movement = "LEFT";
+                    case ConsoleKey.LeftArrow:
 
-                    break;
+                        movement = "LEFT";
 
-                case ConsoleKey.RightArrow:
+                        break;
 
-                    movement = "RIGHT";
+                    case ConsoleKey.RightArrow:
 
-                    break;
+                        movement = "RIGHT";
 
+                        break;
+
+                }
             }
 
             if (movement == "UP")
