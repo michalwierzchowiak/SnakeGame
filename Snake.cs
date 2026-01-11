@@ -47,9 +47,9 @@ class Program
 
         string obstacle = "*";
 
-        int obstacleXpos = randomnummer.Next(1, screenwidth);
+        int obstacleXpos = randomnummer.Next(1, screenwidth - 1);
 
-        int obstacleYpos = randomnummer.Next(1, screenheight);
+        int obstacleYpos = randomnummer.Next(1, screenheight - 1);
 
         while (true)
 
