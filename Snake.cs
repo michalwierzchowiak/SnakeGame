@@ -123,7 +123,6 @@ class Program
 
             Console.ForegroundColor = ConsoleColor.White;
 
-            Console.Write("H");
 
             for (int i = 0; i < teljePositie.Count(); i+=2)
 
