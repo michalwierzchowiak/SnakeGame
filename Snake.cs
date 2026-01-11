@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 
@@ -11,27 +12,19 @@ class Program
 
     {
 
-        Console.WindowHeight = 16;
+        Console.WindowHeight = 18;
 
         Console.WindowWidth = 32;
 
-        int screenwidth = Console.WindowWidth;
+        int screenwidth = 32;
 
-        int screenheight = Console.WindowHeight;
+        int screenheight = 16;
 
         Random randomnummer = new Random();
 
-        pixel hoofd = new pixel();
-
-        hoofd.xpos = screenwidth / 2;
-
-        hoofd.ypos = screenheight / 2;
-
-        hoofd.schermkleur = ConsoleColor.Red;
-
         string movement = "RIGHT";
 
-        List<int> telje = new List<int>();
+        List<int> teljePositie = new List<int>();
 
         int score = 0;
 
@@ -44,11 +37,6 @@ class Program
         hoofd.schermKleur = ConsoleColor.Red;
 
 
-
-        List<int> teljePositie = new List<int>();
-
-
-
         teljePositie.Add(hoofd.xPos);
 
         teljePositie.Add(hoofd.yPos);
@@ -57,11 +45,13 @@ class Program
 
         DateTime tijd = DateTime.Now;
 
-        string obstacle = "*";
+        Obstakel obstacle = new Obstakel();
 
-        int obstacleXpos = randomnummer.Next(1, screenwidth);
+        obstacle.karacter = "*";
 
-        int obstacleYpos = randomnummer.Next(1, screenheight);
+        obstacle.Xpos = randomnummer.Next(1, screenwidth - 1);
+
+        obstacle.Ypos = randomnummer.Next(1, screenheight - 1);
 
         while (true)
 
@@ -73,9 +63,9 @@ class Program
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            Console.SetCursorPosition(obstacleXpos, obstacleYpos);
+            Console.SetCursorPosition(obstacle.Xpos, obstacle.Ypos);
 
-            Console.Write(obstacle);
+            Console.Write(obstacle.karacter);
 
 
 
@@ -129,19 +119,20 @@ class Program
 
             }
 
-            Console.ForegroundColor =  /* ?? */;
+            Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.WriteLine("Score: " + score);
+            Console.SetCursorPosition(0, screenheight);
+
+            Console.Write("Score: " + score);
 
             Console.ForegroundColor = ConsoleColor.White;
 
-            Console.Write("H");
 
-            for (int i = 0; i < telje.Count(); i++)
+            for (int i = 0; i < teljePositie.Count(); i+=2)
 
             {
 
-                Console.SetCursorPosition(telje[i], telje[i + 1]);
+                Console.SetCursorPosition(teljePositie[i], teljePositie[i + 1]);
 
                 Console.Write("■");
 
@@ -167,38 +158,39 @@ class Program
 
 
 
-            ConsoleKeyInfo info = Console.ReadKey();
-
             //Game Logic
-
-            switch (info.Key)
-
+            if (Console.KeyAvailable)
             {
+                ConsoleKeyInfo info = Console.ReadKey();
+                switch (info.Key)
 
-                case ConsoleKey.UpArrow:
+                {
 
-                    movement = "UP";
+                    case ConsoleKey.UpArrow:
 
-                    break;
+                        movement = "UP";
 
-                case ConsoleKey.DownArrow:
+                        break;
 
-                    movement = "DOWN";
+                    case ConsoleKey.DownArrow:
 
-                    // ???
+                        movement = "DOWN";
 
-                case ConsoleKey.LeftArrow:
+                        break;
 
-                    movement = "LEFT";
+                    case ConsoleKey.LeftArrow:
 
-                    break;
+                        movement = "LEFT";
 
-                case ConsoleKey.RightArrow:
+                        break;
 
-                    movement = "RIGHT";
+                    case ConsoleKey.RightArrow:
 
-                    break;
+                        movement = "RIGHT";
 
+                        break;
+
+                }
             }
 
             if (movement == "UP")
@@ -219,15 +211,15 @@ class Program
 
             //Hindernis treffen
 
-            if (hoofd.xPos == obstacleXpos /* ?? */ == obstacleYpos)
+            if (hoofd.xPos == obstacle.Xpos && hoofd.yPos == obstacle.Ypos)
 
             {
 
                 score++;
 
-                obstacleXpos = randomnummer.Next(1, screenwidth);
+                obstacle.Xpos = randomnummer.Next(1, screenwidth - 1);
 
-                obstacleYpos = randomnummer.Next(1, screenheight);
+                obstacle.Ypos = randomnummer.Next(1, screenheight - 1);
 
             }
 
@@ -235,15 +227,22 @@ class Program
 
             teljePositie.Insert(1, hoofd.yPos);
 
-            teljePositie.RemoveAt(teljePositie.Count - 1);
-
-            teljePositie.RemoveAt(teljePositie.Count - 1);
+            if (teljePositie.Count > (score + 1) * 2)
+            {
+                teljePositie.RemoveAt(teljePositie.Count - 1);
+                teljePositie.RemoveAt(teljePositie.Count - 1);
+            }
 
             //Kollision mit Wände oder mit sich selbst
 
             if (hoofd.xPos == 0 || hoofd.xPos == screenwidth - 1 || hoofd.yPos == 0 || hoofd.yPos == screenheight - 1)
 
             {
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+                Console.Write("X");
+                Thread.Sleep(1000);
 
                 Console.Clear();
 
@@ -263,11 +262,11 @@ class Program
 
             }
 
-            for (int i = 0; i < telje.Count(); i += 2)
+            for (int i = 2; i < teljePositie.Count(); i += 2)
 
             {
 
-                if (hoofd.xPos == telje[i] && hoofd.yPos == telje[i + 1])
+                if (hoofd.xPos == teljePositie[i] && hoofd.yPos == teljePositie[i + 1])
 
                 {
 
@@ -277,7 +276,7 @@ class Program
 
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
 
-                   //???
+                    Console.WriteLine("Das Spiel ist aus");
 
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
 
@@ -291,7 +290,7 @@ class Program
 
             }
 
-            Thread.Sleep(50);
+            Thread.Sleep(150);
 
         }
 
