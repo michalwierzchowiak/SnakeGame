@@ -130,7 +130,7 @@ class Program
 
             Console.Write("H");
 
-            for (int i = 0; i < telje.Count(); i++)
+            for (int i = 0; i < telje.Count(); i+=2)
 
             {
 
