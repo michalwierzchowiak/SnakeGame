@@ -12,13 +12,13 @@ class Program
 
     {
 
-        Console.WindowHeight = 16;
+        Console.WindowHeight = 18;
 
         Console.WindowWidth = 32;
 
-        int screenwidth = Console.WindowWidth;
+        int screenwidth = 32;
 
-        int screenheight = Console.WindowHeight;
+        int screenheight = 16;
 
         Random randomnummer = new Random();
 
@@ -119,7 +119,9 @@ class Program
 
             Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.WriteLine("Score: " + score);
+            Console.SetCursorPosition(0, screenheight);
+
+            Console.Write("Score: " + score);
 
             Console.ForegroundColor = ConsoleColor.White;
 
