@@ -270,7 +270,7 @@ class Program
 
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2);
 
-                   //???
+                    Console.WriteLine("Das Spiel ist aus");
 
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
 
