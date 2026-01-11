@@ -237,6 +237,11 @@ class Program
 
             {
 
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.SetCursorPosition(hoofd.xPos, hoofd.yPos);
+                Console.Write("X");
+                Thread.Sleep(1000);
+
                 Console.Clear();
 
                 Console.ForegroundColor = ConsoleColor.Red;
